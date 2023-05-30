@@ -22,6 +22,17 @@ describe("app", () => {
       });
   });
 
+  test("POST /properties responds with a 400 with invalid body", async () => {
+    const expectedStatus = 400;
+    const body = {};
+
+    await request(app)
+      .post("/properties")
+      .send(body)
+      .expect(expectedStatus);
+      
+  });
+
   test("GET /properties returns a list of properties", async () => {
     const expectedStatus = 200;
     const expectedBody = [
