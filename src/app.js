@@ -7,10 +7,15 @@ const formatProperty = require("./formatProperty");
 app.use(express.json());
 
 app.post("/properties", async (req, res, next) => {
-  const { body } = req;
-  const property = new PropertyModel(body);
-  await property.save();
-  return res.status(201).send(formatProperty(property));
+  try {
+    const { body } = req;
+    const property = new PropertyModel(body);
+    await property.save();
+    return res.status(201).send(formatProperty(property));
+  } catch (error) {
+    error.status = 400;
+    next (error);
+  }
 });
 
 app.get("/properties", async (req, res) => {
